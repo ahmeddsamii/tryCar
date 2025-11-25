@@ -1,8 +1,8 @@
 package com.example.data.repository
 
 import com.example.data.local.source.PostLocalDataSource
-import com.example.data.remote.mapper.toDomainPostsFromLocal
 import com.example.data.remote.mapper.toEntityList
+import com.example.data.remote.mapper.toEntityPostsFromLocal
 import com.example.data.remote.mapper.toLocal
 import com.example.data.remote.source.PostRemoteDataSource
 import com.example.domain.entity.Comment
@@ -25,7 +25,7 @@ class PostRepositoryImpl(
 
             remotePosts
         }.getOrElse {
-            localDataSource.getAllPosts().toDomainPostsFromLocal()
+            localDataSource.getAllPosts().toEntityPostsFromLocal()
         }
     }
 

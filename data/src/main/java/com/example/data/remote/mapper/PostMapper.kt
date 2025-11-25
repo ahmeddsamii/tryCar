@@ -13,14 +13,6 @@ fun PostDto.toEntity(): Post {
     )
 }
 
-fun PostDto.toLocal(): LocalPost {
-    return LocalPost(
-        userId = userId,
-        id = id,
-        title = title,
-        body = body
-    )
-}
 
 fun Post.toLocal(): LocalPost {
     return LocalPost(
@@ -44,6 +36,4 @@ fun LocalPost.toEntity(): Post {
 }
 
 fun List<Post>.toLocal() = map { it.toLocal() }
-
-fun List<PostDto>.toDomainPosts() = map { it.toEntity() }
-fun List<LocalPost>.toDomainPostsFromLocal() = map { it.toEntity() }
+fun List<LocalPost>.toEntityPostsFromLocal() = map { it.toEntity() }
