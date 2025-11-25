@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.presentation.Route
+import com.example.presentation.shared.ErrorState
+import com.example.presentation.shared.NoConnection
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -49,18 +51,21 @@ fun HomeScreenContent(
     listener: HomeInteractionListener
 ) {
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(state.posts) { post ->
-            PostItem(
-                title = post.title,
-                body = post.body,
-                onClick = { listener.onClickPost(post.id) })
+    if (state.error == ErrorState.NoInternet && state.posts.isEmpty()) {
+        NoConnection(onClickRetry = { listener.onClickRetry() })
+    } else
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(state.posts) { post ->
+                PostItem(
+                    title = post.title,
+                    body = post.body,
+                    onClick = { listener.onClickPost(post.id) })
+            }
         }
-    }
 }
 
 @Composable

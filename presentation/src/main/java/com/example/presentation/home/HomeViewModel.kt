@@ -18,12 +18,17 @@ class HomeViewModel(
             block = { postRepository.getAllPosts() },
             onSuccess = { updateState { copy(posts = it) } },
             onError = { updateState { copy(error = it) } },
-            onStart = { updateState { copy(isLoading = true) } },
+            onStart = { updateState { copy(isLoading = true, error = null) } },
             onEnd = { updateState { copy(isLoading = false) } },
         )
     }
 
     override fun onClickPost(postId: Int) {
         sendEffect(HomeUiEffect.DetailsNavigation(postId))
+    }
+
+    override fun onClickRetry() {
+        updateState { copy(error = null) }
+        getAllPosts()
     }
 }
