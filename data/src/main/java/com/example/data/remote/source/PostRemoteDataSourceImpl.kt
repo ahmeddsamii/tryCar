@@ -1,5 +1,6 @@
 package com.example.data.remote.source
 
+import com.example.data.remote.dto.CommentDto
 import com.example.data.remote.dto.PostDto
 import com.example.data.remote.util.safeApiCall
 import io.ktor.client.HttpClient
@@ -13,6 +14,12 @@ class PostRemoteDataSourceImpl(
     override suspend fun getAllPosts(): List<PostDto> {
         return safeApiCall<List<PostDto>> {
             httpClient.get("/posts")
+        }
+    }
+
+    override suspend fun getAllCommentsByPostId(postId: Int): List<CommentDto> {
+        return safeApiCall<List<CommentDto>> {
+            httpClient.get("/posts/$postId/comments")
         }
     }
 }
