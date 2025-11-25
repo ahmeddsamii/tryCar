@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Comment(
+data class CommentDto(
     @SerialName("postId")
     val postId: Int,
     @SerialName("id")
@@ -13,4 +13,6 @@ data class Comment(
     val name: String,
     @SerialName("email")
     val email: String,
+    @SerialName("body")
+    val body: String
 )
