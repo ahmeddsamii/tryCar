@@ -2,7 +2,7 @@ package com.example.data.remote.source
 
 import com.example.data.remote.dto.CommentDto
 import com.example.data.remote.dto.PostDto
-import com.example.data.remote.util.safeApiCall
+import com.example.data.util.safeApiCall
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import org.koin.core.annotation.Single

@@ -17,5 +17,5 @@ interface PostDao {
     fun clearAllPosts()
 
     @Query("DELETE FROM posts WHERE id = :postId")
-    fun deleteById(postId: Int)
+    fun deletePostById(postId: Int)
 }
