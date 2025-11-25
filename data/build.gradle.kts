@@ -47,4 +47,6 @@ dependencies {
     implementation(libs.bundles.koin)
     ksp(libs.koin.ksp.compiler)
     implementation(libs.ktor.client.cio)
+    implementation(libs.bundles.room)
+    ksp(libs.androidx.room.compiler)
 }
