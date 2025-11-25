@@ -1,4 +1,4 @@
-package com.example.data.remote.util
+package com.example.data.util
 
 import android.util.Log
 import com.example.domain.exception.NoInternetException
@@ -14,13 +14,13 @@ suspend inline fun <reified T> safeApiCall(
     val result = try {
         execute()
     } catch (exception: IOException) {
-        Log.e("safeApiCall", "IOException: ${exception.message}")
+        Log.e(SAFE_API_CALL_TAG, "IOException: ${exception.message}")
         throw NoInternetException()
     } catch (exception: UnresolvedAddressException) {
-        Log.e("safeApiCall", "UnresolvedAddressException: ${exception.message}")
+        Log.e(SAFE_API_CALL_TAG, "UnresolvedAddressException: ${exception.message}")
         throw NoInternetException()
     } catch (exception: Exception) {
-        Log.e("safeApiCall", "Unknown exception: ${exception.message}")
+        Log.e(SAFE_API_CALL_TAG, "Unknown exception: ${exception.message}")
         throw exception
     }
 
@@ -37,7 +37,7 @@ suspend inline fun <reified T> handleResponseStatusCode(result: HttpResponse): T
             when (result.status) {
                 HttpStatusCode.Unauthorized -> {
                     logError(
-                        "HANDLE_ERROR_STATUS_TAG",
+                        HANDLE_ERROR_STATUS_TAG,
                         "Unauthorized",
                         "Not authorized to do this action"
                     )
@@ -46,7 +46,7 @@ suspend inline fun <reified T> handleResponseStatusCode(result: HttpResponse): T
 
                 HttpStatusCode.NotFound -> {
                     logError(
-                        "HANDLE_ERROR_STATUS_TAG",
+                        HANDLE_ERROR_STATUS_TAG,
                         "Not found",
                         "the resource you requested could not be found"
                     )
@@ -66,7 +66,7 @@ suspend inline fun <reified T> handleResponseStatusCode(result: HttpResponse): T
 
         in 500..599 -> {
             logError(
-                "HANDLE_ERROR_STATUS_TAG",
+                HANDLE_ERROR_STATUS_TAG,
                 "Server error",
                 "An error occurred on the server side"
             )
@@ -75,7 +75,7 @@ suspend inline fun <reified T> handleResponseStatusCode(result: HttpResponse): T
 
         else -> {
             logError(
-                "HANDLE_ERROR_STATUS_TAG",
+                HANDLE_ERROR_STATUS_TAG,
                 "Unknown status code ${result.status.value}",
                 "An error with status code ${result.status.value} happened"
             )
@@ -92,4 +92,5 @@ fun logError(
     Log.e(tag, "$type: $message" )
 }
 
-private const val HANDLE_ERROR_STATUS_TAG = "handleErrorStatus"
+const val HANDLE_ERROR_STATUS_TAG = "handleErrorStatus"
+const val SAFE_API_CALL_TAG = "handleErrorStatus"
