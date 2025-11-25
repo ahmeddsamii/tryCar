@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import net.thechance.mena.trends.presentation.shared.base.ErrorState
 import kotlin.coroutines.cancellation.CancellationException
 
 abstract class BaseViewModel<State, Effect>(
