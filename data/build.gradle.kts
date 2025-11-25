@@ -46,4 +46,5 @@ dependencies {
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.koin)
     ksp(libs.koin.ksp.compiler)
+    implementation(libs.ktor.client.cio)
 }
