@@ -7,7 +7,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class HomeViewModel(
     private val postRepository: PostRepository
-) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()) {
+) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()), HomeInteractionListener {
 
     init {
         getAllPosts()
@@ -21,5 +21,9 @@ class HomeViewModel(
             onStart = { updateState { copy(isLoading = true) } },
             onEnd = { updateState { copy(isLoading = false) } },
         )
+    }
+
+    override fun onClickPost(postId: Int) {
+        sendEffect(HomeUiEffect.DetailsNavigation(postId))
     }
 }
