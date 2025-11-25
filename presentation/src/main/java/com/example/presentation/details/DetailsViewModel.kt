@@ -11,7 +11,7 @@ import org.koin.android.annotation.KoinViewModel
 class DetailsViewModel(
     savedStateHandle: SavedStateHandle,
     private val postRepository: PostRepository
-) : BaseViewModel<DetailsUiState, DetailsUiEffect>(DetailsUiState()) {
+) : BaseViewModel<DetailsUiState, DetailsUiEffect>(DetailsUiState()), CommentInteractionListener {
 
     private val postId = savedStateHandle.toRoute<Route.Details>().postId
 
@@ -27,5 +27,10 @@ class DetailsViewModel(
             onStart = {updateState { copy(isLoading = true) } },
             onEnd = { updateState { copy(isLoading = false) } },
         )
+    }
+
+    override fun onClickRetry() {
+        updateState { copy(error = null) }
+        getAllCommentsByPostId()
     }
 }

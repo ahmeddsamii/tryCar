@@ -18,27 +18,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.presentation.shared.ErrorState
+import com.example.presentation.shared.NoConnection
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(viewModel: DetailsViewModel = koinViewModel()) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
-    DetailsScreenContent(state)
+    DetailsScreenContent(state, viewModel)
 }
 
 @Composable
 fun DetailsScreenContent(
-    state: DetailsUiState
+    state: DetailsUiState,
+    listener: CommentInteractionListener
 ) {
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(state.comments) { post ->
-            PostItem(title = post.name, body = post.body)
+    if (state.error == ErrorState.NoInternet && state.comments.isEmpty()) {
+        NoConnection(onClickRetry = { listener.onClickRetry() })
+    } else {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(state.comments) { post ->
+                PostItem(title = post.name, body = post.body)
+            }
         }
     }
 }
