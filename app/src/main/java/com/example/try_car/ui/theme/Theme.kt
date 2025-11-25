@@ -1,6 +1,5 @@
 package com.example.try_car.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -9,28 +8,36 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(0xFF80CBC4),
+    onPrimary = Color(0xFF00332E),
+    secondary = Color(0xFF90CAF9),
+    onSecondary = Color(0xFF003355),
+    tertiary = Color(0xFFE6EE9C),
+    onTertiary = Color(0xFF333800),
+    background = Color(0xFF121212),
+    onBackground = Color(0xFFE0E0E0),
+    surface = Color(0xFF1E1E1E),
+    onSurface = Color(0xFFE0E0E0)
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+private val LightColorScheme = lightColorScheme(
+    primary = Color(0xFF111D2E),
     onPrimary = Color.White,
+    secondary = Color(0xFF1976D2),
     onSecondary = Color.White,
+    tertiary = Color(0xFF827717),
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    background = Color(0xFFF6F6F6),
+    onBackground = Color(0xFF1B1B1B),
+    surface = Color(0xFFFFFFFF),
+    onSurface = Color(0xFF1B1B1B)
+
+
 )
 
 @Composable
