@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.presentation.Route
+import com.example.presentation.details.DetailsScreen
 import com.example.presentation.favorite.FavoriteScreen
 import com.example.presentation.home.HomeScreen
 import com.example.try_car.R
@@ -65,11 +66,15 @@ fun MainGraph() {
                     startDestination = Route.Home,
                 ) {
                     composable<Route.Home> {
-                        HomeScreen()
+                        HomeScreen(navController)
                     }
 
                     composable<Route.Favorite> {
                         FavoriteScreen()
+                    }
+
+                    composable<Route.Details> {
+                        DetailsScreen()
                     }
                 }
             }
