@@ -2,6 +2,7 @@ package com.example.presentation.home
 
 import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
+import com.example.domain.util.ConnectivityObserver
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -21,11 +22,13 @@ class HomeViewModelTest {
 
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var repository: PostRepository
+    private lateinit var connectivityObserver: ConnectivityObserver
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         repository = mockk()
+        connectivityObserver = mockk(relaxed = true)
     }
 
     @After
@@ -41,7 +44,7 @@ class HomeViewModelTest {
         )
         coEvery { repository.getAllPosts() } returns fakePosts
 
-        val viewModel = HomeViewModel(repository, testDispatcher)
+        val viewModel = HomeViewModel(repository, connectivityObserver, testDispatcher)
 
         advanceUntilIdle()
 
@@ -56,7 +59,7 @@ class HomeViewModelTest {
         val exception = RuntimeException("Network error")
         coEvery { repository.getAllPosts() } throws exception
 
-        val viewModel = HomeViewModel(repository, testDispatcher)
+        val viewModel = HomeViewModel(repository, connectivityObserver, testDispatcher)
 
         advanceUntilIdle()
 
@@ -68,7 +71,7 @@ class HomeViewModelTest {
     fun `onClickRetry calls getAllPosts again and updates state`() = runTest {
         coEvery { repository.getAllPosts() } throws RuntimeException("fail")
 
-        val viewModel = HomeViewModel(repository, testDispatcher)
+        val viewModel = HomeViewModel(repository, connectivityObserver, testDispatcher)
         advanceUntilIdle()
 
         val fakePosts = listOf(Post(1, 1, "X", "Y"))

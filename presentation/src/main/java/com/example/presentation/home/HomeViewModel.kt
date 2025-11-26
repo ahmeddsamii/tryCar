@@ -1,9 +1,9 @@
 package com.example.presentation.home
 
 import android.util.Log
-import com.example.domain.ConnectivityObserver
 import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
+import com.example.domain.util.ConnectivityObserver
 import com.example.presentation.shared.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
