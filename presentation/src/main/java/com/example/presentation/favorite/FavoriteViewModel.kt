@@ -31,6 +31,7 @@ class FavoriteViewModel(
         tryToExecute(
             block = { postRepository.deletePostById(postId) },
             onSuccess = { getAllFavoritePosts() },
+            onError = { updateState { copy(error = it) } }
         )
     }
 }
