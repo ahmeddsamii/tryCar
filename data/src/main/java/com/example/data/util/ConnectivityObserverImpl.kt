@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.data.util
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -6,7 +6,7 @@ import android.net.ConnectivityManager.NetworkCallback
 import android.net.Network
 import android.net.NetworkCapabilities
 import androidx.core.content.getSystemService
-import com.example.domain.ConnectivityObserver
+import com.example.domain.util.ConnectivityObserver
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
