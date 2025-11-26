@@ -67,36 +67,31 @@ fun NavBar(
         navBackStackEntry?.destination?.hasRoute(destination::class) == true
     }
 
-    Box(
+    Row(
         modifier = modifier
+            .fillMaxWidth()
             .background(navBarColors.backgroundColor)
             .navigationBarsPadding()
-            .fillMaxWidth()
+            .padding(vertical = NavBarDimens.verticalPadding),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = NavBarDimens.verticalPadding),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            navDestinations.forEach { item ->
-                NavBarItem(
-                    tabIcons = item.tabIcons,
-                    selectedIconColor = navBarColors.selectedIconColor,
-                    idleIconColor = navBarColors.idleIconColor,
-                    onClick = {
-                        navController.navigate(item.destination) {
-                            launchSingleTop = true
-                            restoreState = false
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = false
-                            }
+        navDestinations.forEach { item ->
+            NavBarItem(
+                tabIcons = item.tabIcons,
+                selectedIconColor = navBarColors.selectedIconColor,
+                idleIconColor = navBarColors.idleIconColor,
+                onClick = {
+                    navController.navigate(item.destination) {
+                        launchSingleTop = true
+                        restoreState = false
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = false
                         }
-                    },
-                    isSelected = checkIfSelected(item.destination)
-                )
-            }
+                    }
+                },
+                isSelected = checkIfSelected(item.destination)
+            )
         }
     }
 }
