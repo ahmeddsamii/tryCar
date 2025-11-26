@@ -1,8 +1,10 @@
 package com.example.data.repository
 
 import com.example.data.local.source.PostLocalDataSource
+import com.example.data.remote.mapper.favoritesToEntityList
 import com.example.data.remote.mapper.toEntityList
 import com.example.data.remote.mapper.toEntityPostsFromLocal
+import com.example.data.remote.mapper.toFavorite
 import com.example.data.remote.mapper.toLocal
 import com.example.data.remote.source.PostRemoteDataSource
 import com.example.domain.entity.Comment
@@ -25,12 +27,21 @@ class PostRepositoryImpl(
 
             remotePosts
         }.getOrElse {
-            localDataSource.getAllPosts().toEntityPostsFromLocal()
+            val localPosts = localDataSource.getAllPosts().toEntityPostsFromLocal()
+            localPosts.ifEmpty { throw it }
         }
     }
 
     override suspend fun getAllCommentsByPostId(postId: Int): List<Comment> {
         return remoteDataSource.getAllCommentsByPostId(postId).toEntityList()
+    }
+
+    override suspend fun getAllFavoritePosts(): List<Post> {
+        return localDataSource.getAllFavoritePosts().favoritesToEntityList()
+    }
+
+    override suspend fun insertFavoritePost(post: Post) {
+        localDataSource.insertFavoritePost(post.toFavorite())
     }
 
     private fun clearAllPosts() = localDataSource.clearAllPosts()
