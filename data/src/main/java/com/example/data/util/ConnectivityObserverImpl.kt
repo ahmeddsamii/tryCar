@@ -19,7 +19,7 @@ class ConnectivityObserverImpl(
     private val connectivityManager = context.getSystemService<ConnectivityManager>()!!
 
     override val isConnected: Flow<Boolean>
-        get() = callbackFlow @androidx.annotation.RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE) {
+        get() = callbackFlow {
             val callback = object : NetworkCallback() {
                 override fun onCapabilitiesChanged(
                     network: Network,
