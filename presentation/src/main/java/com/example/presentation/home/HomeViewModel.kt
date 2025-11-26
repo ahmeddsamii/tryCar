@@ -1,5 +1,6 @@
 package com.example.presentation.home
 
+import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
 import com.example.presentation.shared.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -34,5 +35,11 @@ class HomeViewModel(
     override fun onClickRetry() {
         updateState { copy(error = null) }
         getAllPosts()
+    }
+
+    override fun onClickFavorite(post: Post) {
+        tryToExecute(
+            block = { postRepository.insertFavoritePost(post) }
+        )
     }
 }
