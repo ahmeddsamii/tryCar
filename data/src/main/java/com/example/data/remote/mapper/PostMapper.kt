@@ -3,14 +3,15 @@ package com.example.data.remote.mapper
 import com.example.data.local.entity.FavoritePost
 import com.example.data.local.entity.LocalPost
 import com.example.data.remote.dto.PostDto
+import com.example.data.util.orZero
 import com.example.domain.entity.Post
 
 fun PostDto.toEntity(): Post {
     return Post(
-        userId = userId,
-        id = id,
-        title = title,
-        body = body
+        userId = userId.orZero(),
+        id = id.orZero(),
+        title = title.orEmpty(),
+        body = body.orEmpty()
     )
 }
 

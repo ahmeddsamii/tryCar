@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CommentDto(
     @SerialName("postId")
-    val postId: Int,
+    val postId: Int? = null,
     @SerialName("id")
-    val id: Int,
+    val id: Int? = null,
     @SerialName("name")
-    val name: String,
+    val name: String? = null,
     @SerialName("email")
-    val email: String,
+    val email: String? = null,
     @SerialName("body")
-    val body: String
+    val body: String? = null
 )

@@ -1,15 +1,16 @@
 package com.example.data.remote.mapper
 
 import com.example.data.remote.dto.CommentDto
+import com.example.data.util.orZero
 import com.example.domain.entity.Comment
 
 fun CommentDto.toEntity(): Comment {
     return Comment(
-        postId = postId,
-        id = id,
-        name = name,
-        email = email,
-        body = body
+        postId = postId.orZero(),
+        id = id.orZero(),
+        name = name.orEmpty(),
+        email = email.orEmpty(),
+        body = body.orEmpty()
     )
 }
 
