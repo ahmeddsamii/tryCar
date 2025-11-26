@@ -5,12 +5,15 @@ import androidx.navigation.toRoute
 import com.example.domain.repository.PostRepository
 import com.example.presentation.Route
 import com.example.presentation.shared.BaseViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class DetailsViewModel(
     savedStateHandle: SavedStateHandle,
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel<DetailsUiState, DetailsUiEffect>(DetailsUiState()), CommentInteractionListener {
 
     private val postId = savedStateHandle.toRoute<Route.Details>().postId
@@ -26,6 +29,7 @@ class DetailsViewModel(
             onError = { updateState { copy(error = it) } },
             onStart = {updateState { copy(isLoading = true) } },
             onEnd = { updateState { copy(isLoading = false) } },
+            dispatcher = dispatcher
         )
     }
 

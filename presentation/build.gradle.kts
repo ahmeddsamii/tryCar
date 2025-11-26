@@ -52,4 +52,8 @@ dependencies {
     implementation(libs.bundles.navigation)
     implementation(libs.kotlinx.serialization.json)
     ksp(libs.koin.ksp.compiler)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }
