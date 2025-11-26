@@ -43,8 +43,11 @@ fun DetailsScreenContent(
             contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(state.comments) { post ->
-                PostItem(title = post.name, body = post.body)
+            items(state.comments) { comment ->
+                PostItem(
+                    email = comment.email,
+                    body = comment.body,
+                )
             }
         }
     }
@@ -52,7 +55,7 @@ fun DetailsScreenContent(
 
 @Composable
 private fun PostItem(
-    title: String,
+    email: String,
     body: String,
     modifier: Modifier = Modifier
 ) {
@@ -67,7 +70,7 @@ private fun PostItem(
             .padding(16.dp)
     ) {
         Text(
-            text = title,
+            text = email,
             modifier = Modifier.padding(bottom = 32.dp)
         )
         Text(text = body)
