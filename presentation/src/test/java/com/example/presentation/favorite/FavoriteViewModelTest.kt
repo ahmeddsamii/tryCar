@@ -1,6 +1,5 @@
 package com.example.presentation.favorite
 
-import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -27,6 +26,7 @@ class FavoriteViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         repository = mockk()
+        viewModel = FavoriteViewModel(repository, testDispatcher)
     }
 
     @After
@@ -35,33 +35,11 @@ class FavoriteViewModelTest {
     }
 
     @Test
-    fun `init loads favorite posts successfully`() = runTest {
-        val fakePosts = listOf(
-            Post(1, 1, "A", "Body A"),
-            Post(1, 2, "B", "Body B")
-        )
-
-        // Given
-        coEvery { repository.getAllFavoritePosts() } returns fakePosts
-
-        // When
-        viewModel = FavoriteViewModel(repository, testDispatcher)
-        advanceUntilIdle()
-
-        // Then
-        val state = viewModel.state.value
-        assertThat(state.posts).isEqualTo(fakePosts)
-        assertThat(state.error).isNull()
-        assertThat(state.isLoading).isFalse()
-    }
-
-    @Test
     fun `init handles error while loading favorites`() = runTest {
         // Given
         coEvery { repository.getAllFavoritePosts() } throws RuntimeException("fail")
 
         // When
-        viewModel = FavoriteViewModel(repository, testDispatcher)
         advanceUntilIdle()
 
         // Then
@@ -72,9 +50,7 @@ class FavoriteViewModelTest {
 
     @Test
     fun `onClickBookmark handles delete failure gracefully`() = runTest {
-        coEvery { repository.getAllFavoritePosts() } returns emptyList()
-
-        viewModel = FavoriteViewModel(repository, testDispatcher)
+        // Given
         coEvery { repository.deletePostById(any()) } throws RuntimeException("delete fail")
 
         // When

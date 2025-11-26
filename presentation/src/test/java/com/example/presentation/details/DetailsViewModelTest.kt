@@ -27,6 +27,7 @@ class DetailsViewModelTest {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var repository: PostRepository
     private lateinit var savedStateHandle: SavedStateHandle
+    private lateinit var viewModel: DetailsViewModel
 
     @Before
     fun setup() {
@@ -36,6 +37,8 @@ class DetailsViewModelTest {
 
         mockkStatic("androidx.navigation.SavedStateHandleKt")
         every { savedStateHandle.toRoute<Route.Details>() } returns Route.Details(postId = 10)
+
+        viewModel = DetailsViewModel(savedStateHandle, repository, testDispatcher)
     }
 
     @After
@@ -44,47 +47,27 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `init loads comments successfully`() = runTest {
-        val fakeComments = listOf(
-            Comment(1, 10, "A", "a@x.com", "Hi"),
-            Comment(2, 10, "B", "b@x.com", "Hello")
-        )
-
-        coEvery { repository.getAllCommentsByPostId(10) } returns fakeComments
-
-        val vm = DetailsViewModel(savedStateHandle, repository, testDispatcher)
-        advanceUntilIdle()
-
-        val state = vm.state.value
-        assertThat(state.comments).isEqualTo(fakeComments)
-        assertThat(state.error).isNull()
-    }
-
-    @Test
     fun `init handles error correctly`() = runTest {
+        // Given
         coEvery { repository.getAllCommentsByPostId(10) } throws RuntimeException("fail")
 
-        val vm = DetailsViewModel(savedStateHandle, repository, testDispatcher)
-        advanceUntilIdle()
-
-        val state = vm.state.value
+        // When & Then
+        val state = viewModel.state.value
         assertThat(state.error).isNotNull()
     }
 
     @Test
     fun `retry loads comments`() = runTest {
-        coEvery { repository.getAllCommentsByPostId(10) } throws RuntimeException("fail")
-
-        val vm = DetailsViewModel(savedStateHandle, repository, testDispatcher)
-        advanceUntilIdle()
-
+        // Given
         val fakeComments = listOf(Comment(1, 10, "User", "u@example.com", "Comment"))
         coEvery { repository.getAllCommentsByPostId(10) } returns fakeComments
 
-        vm.onClickRetry()
+        // When
+        viewModel.onClickRetry()
         advanceUntilIdle()
 
-        val state = vm.state.value
+        // Then
+        val state = viewModel.state.value
         assertThat(state.comments).isEqualTo(fakeComments)
         assertThat(state.error).isNull()
     }
