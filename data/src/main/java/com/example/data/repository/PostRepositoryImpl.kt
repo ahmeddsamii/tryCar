@@ -20,8 +20,8 @@ class PostRepositoryImpl(
         return runCatching {
             val remotePosts = remoteDataSource.getAllPosts().toEntityList()
 
-            localDataSource.clearAllPosts()
-            localDataSource.insertAllPosts(remotePosts.toLocal())
+            clearAllPosts()
+            insertAllPosts(remotePosts)
 
             remotePosts
         }.getOrElse {
@@ -32,4 +32,9 @@ class PostRepositoryImpl(
     override suspend fun getAllCommentsByPostId(postId: Int): List<Comment> {
         return remoteDataSource.getAllCommentsByPostId(postId).toEntityList()
     }
+
+    private fun clearAllPosts() = localDataSource.clearAllPosts()
+
+    private fun insertAllPosts(posts: List<Post>) = localDataSource.insertAllPosts(posts.toLocal())
+
 }
