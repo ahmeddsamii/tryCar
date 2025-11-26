@@ -51,4 +51,5 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
 }
