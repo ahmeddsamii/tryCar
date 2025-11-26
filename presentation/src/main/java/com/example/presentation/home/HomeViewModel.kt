@@ -1,17 +1,23 @@
 package com.example.presentation.home
 
+import android.util.Log
+import com.example.domain.ConnectivityObserver
 import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
 import com.example.presentation.shared.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class HomeViewModel(
     private val postRepository: PostRepository,
+    connectivityObserver: ConnectivityObserver,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()), HomeInteractionListener {
+
+    private val isConnected = connectivityObserver.isConnected
 
     init {
         getAllPosts()
@@ -39,7 +45,14 @@ class HomeViewModel(
 
     override fun onClickFavorite(post: Post) {
         tryToExecute(
-            block = { postRepository.insertFavoritePost(post) }
+            block = {
+                postRepository.insertFavoritePost(post)
+                if (isConnected.first()) addFavoriteToServer()
+            }
         )
+    }
+
+    private fun addFavoriteToServer() {
+        Log.d("TAG", "addFavoriteToServer...")
     }
 }

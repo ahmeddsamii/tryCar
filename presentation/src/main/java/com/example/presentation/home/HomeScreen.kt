@@ -99,13 +99,17 @@ private fun PostItem(
         ) {
             Text(
                 text = title,
-                modifier = Modifier.padding(bottom = 32.dp).weight(1f)
+                modifier = Modifier
+                    .padding(bottom = 32.dp)
+                    .weight(1f)
             )
 
             Icon(
                 painter = painterResource(R.drawable.ic_bookmark),
                 contentDescription = "bookmark icon",
-                modifier = Modifier.width(20.dp).clickable { onClickSave() },
+                modifier = Modifier
+                    .width(20.dp)
+                    .clickable { onClickSave() },
             )
         }
         Text(text = body)
