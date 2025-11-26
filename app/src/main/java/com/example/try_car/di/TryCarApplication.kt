@@ -12,7 +12,7 @@ class TryCarApplication: Application() {
         super.onCreate()
         startKoin{
             androidContext(this@TryCarApplication)
-            modules(AppModule().module, DataModule().module, PresentationModule().module)
+            modules(DataModule().module, PresentationModule().module)
         }
     }
 }
