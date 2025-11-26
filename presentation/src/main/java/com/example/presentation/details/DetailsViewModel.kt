@@ -24,10 +24,10 @@ class DetailsViewModel(
 
     private fun getAllCommentsByPostId() {
         tryToExecute(
-            block = {postRepository.getAllCommentsByPostId(postId)},
+            block = { postRepository.getAllCommentsByPostId(postId) },
             onSuccess = { updateState { copy(comments = it) } },
             onError = { updateState { copy(error = it) } },
-            onStart = {updateState { copy(isLoading = true) } },
+            onStart = { updateState { copy(isLoading = true) } },
             onEnd = { updateState { copy(isLoading = false) } },
             dispatcher = dispatcher
         )
