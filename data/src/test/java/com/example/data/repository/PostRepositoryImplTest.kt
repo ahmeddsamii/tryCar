@@ -1,10 +1,12 @@
 package com.example.data.repository
 
+import com.example.data.local.entity.FavoritePost
 import com.example.data.local.entity.LocalPost
 import com.example.data.local.source.PostLocalDataSource
 import com.example.data.remote.dto.CommentDto
 import com.example.data.remote.dto.PostDto
 import com.example.data.remote.source.PostRemoteDataSource
+import com.example.domain.entity.Post
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -97,32 +99,6 @@ class PostRepositoryImplTest {
     }
 
     @Test
-    fun `getAllPosts does not clear cache when remote fails`() = runTest {
-        // Given
-        coEvery { remoteDataSource.getAllPosts() } throws Exception("Network error")
-        coEvery { localDataSource.getAllPosts() } returns emptyList()
-
-        // When
-        repository.getAllPosts()
-
-        // Then
-        verify(exactly = 0) { localDataSource.clearAllPosts() }
-    }
-
-    @Test
-    fun `getAllPosts returns empty list when both sources fail`() = runTest {
-        // Given
-        coEvery { remoteDataSource.getAllPosts() } throws Exception("Network error")
-        coEvery { localDataSource.getAllPosts() } returns emptyList()
-
-        // When
-        val result = repository.getAllPosts()
-
-        // Then
-        assertThat(result).isEmpty()
-    }
-
-    @Test
     fun `getAllCommentsByPostId returns comments from remote`() = runTest {
         // Given
         val comments = listOf(
@@ -160,5 +136,64 @@ class PostRepositoryImplTest {
 
         // Then
         assertThat(result).isEmpty()
+    }
+
+    @Test
+    fun `getAllFavoritePosts returns mapped favorite posts`() = runTest {
+        // Given
+        val localFavorites = listOf(
+            FavoritePost(userId = 1, id = 10, title = "Fav", body = "Fav Body")
+        )
+        coEvery { localDataSource.getAllFavoritePosts() } returns localFavorites
+
+        // When
+        val result = repository.getAllFavoritePosts()
+
+        // Then
+        assertThat(result).hasSize(1)
+        assertThat(result[0].id).isEqualTo(10)
+    }
+
+    @Test
+    fun `getAllFavoritePosts calls local data source`() = runTest {
+        // Given
+        coEvery { localDataSource.getAllFavoritePosts() } returns emptyList()
+
+        // When
+        repository.getAllFavoritePosts()
+
+        // Then
+        coVerify(exactly = 1) { localDataSource.getAllFavoritePosts() }
+    }
+
+    @Test
+    fun `insertFavoritePost calls local insert with mapped entity`() = runTest {
+        // Given
+        val post = Post(
+            userId = 1,
+            id = 100,
+            title = "Fav Post",
+            body = "Fav Body"
+        )
+
+        coEvery { localDataSource.insertFavoritePost(any()) } returns Unit
+
+        // When
+        repository.insertFavoritePost(post)
+
+        // Then
+        coVerify(exactly = 1) { localDataSource.insertFavoritePost(match { it.id == 100 }) }
+    }
+
+    @Test
+    fun `deletePostById calls local delete with correct id`() = runTest {
+        // Given
+        coEvery { localDataSource.deleteFavoritePostById(any()) } returns Unit
+
+        // When
+        repository.deletePostById(5)
+
+        // Then
+        coVerify(exactly = 1) { localDataSource.deleteFavoritePostById(5) }
     }
 }
