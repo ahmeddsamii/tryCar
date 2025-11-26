@@ -44,6 +44,10 @@ class PostRepositoryImpl(
         localDataSource.insertFavoritePost(post.toFavorite())
     }
 
+    override suspend fun deletePostById(postId: Int) {
+        localDataSource.deleteFavoritePostById(postId)
+    }
+
     private fun clearAllPosts() = localDataSource.clearAllPosts()
 
     private fun insertAllPosts(posts: List<Post>) = localDataSource.insertAllPosts(posts.toLocal())

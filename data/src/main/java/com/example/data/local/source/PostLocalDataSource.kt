@@ -11,4 +11,5 @@ interface PostLocalDataSource {
     fun insertPost(post: LocalPost)
     fun getAllFavoritePosts(): List<FavoritePost>
     fun insertFavoritePost(post: FavoritePost)
+    fun deleteFavoritePostById(postId: Int)
 }

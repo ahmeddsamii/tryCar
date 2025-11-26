@@ -27,6 +27,9 @@ interface PostDao {
     @Query("DELETE FROM posts WHERE id = :postId")
     fun deletePostById(postId: Int)
 
+    @Query("DELETE FROM favorite_posts WHERE id = :postId")
+    fun deleteFavoritePostById(postId: Int)
+
     @Query("SELECT * FROM favorite_posts")
     fun getAllFavoritePosts(): List<FavoritePost>
 

@@ -8,4 +8,5 @@ interface PostRepository {
     suspend fun getAllCommentsByPostId(postId: Int): List<Comment>
     suspend fun getAllFavoritePosts(): List<Post>
     suspend fun insertFavoritePost(post: Post)
+    suspend fun deletePostById(postId: Int)
 }

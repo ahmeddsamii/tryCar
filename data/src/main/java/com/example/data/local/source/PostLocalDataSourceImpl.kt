@@ -34,6 +34,10 @@ class PostLocalDataSourceImpl(
         postDao.insertFavoritePost(post)
     }
 
+    override fun deleteFavoritePostById(postId: Int) {
+        postDao.deleteFavoritePostById(postId)
+    }
+
     override fun getAllPosts(): List<LocalPost> {
         return postDao.getAllPosts()
     }
