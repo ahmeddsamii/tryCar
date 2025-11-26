@@ -49,4 +49,6 @@ dependencies {
     implementation(libs.ktor.client.cio)
     implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
