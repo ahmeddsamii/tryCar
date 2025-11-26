@@ -1,6 +1,7 @@
 package com.example.data.local.source
 
 import com.example.data.local.dao.PostDao
+import com.example.data.local.entity.FavoritePost
 import com.example.data.local.entity.LocalPost
 import org.koin.core.annotation.Single
 
@@ -15,6 +16,22 @@ class PostLocalDataSourceImpl(
 
     override fun clearAllPosts() {
         postDao.clearAllPosts()
+    }
+
+    override fun getPostById(postId: Int): LocalPost {
+        return postDao.getPostById(postId)
+    }
+
+    override fun insertPost(post: LocalPost) {
+        postDao.insertPost(post)
+    }
+
+    override fun getAllFavoritePosts(): List<FavoritePost> {
+        return postDao.getAllFavoritePosts()
+    }
+
+    override fun insertFavoritePost(post: FavoritePost) {
+        postDao.insertFavoritePost(post)
     }
 
     override fun getAllPosts(): List<LocalPost> {
