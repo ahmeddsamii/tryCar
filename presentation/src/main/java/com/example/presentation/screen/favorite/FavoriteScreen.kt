@@ -1,4 +1,4 @@
-package com.example.presentation.favorite
+package com.example.presentation.screen.favorite
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,8 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.presentation.R
-import com.example.presentation.shared.ErrorState
-import com.example.presentation.shared.NoConnection
+import com.example.presentation.shared.base.ErrorState
+import com.example.presentation.shared.component.NoConnection
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.presentation.favorite
+package com.example.presentation.screen.favorite
 
 interface FavoriteInteractionListener {
     fun onClickBookmark(postId: Int)

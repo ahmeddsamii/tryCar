@@ -1,7 +1,7 @@
-package com.example.presentation.favorite
+package com.example.presentation.screen.favorite
 
 import com.example.domain.entity.Post
-import com.example.presentation.shared.ErrorState
+import com.example.presentation.shared.base.ErrorState
 
 data class FavoriteUiState(
     val posts: List<Post> = emptyList(),

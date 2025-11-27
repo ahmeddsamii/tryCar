@@ -1,7 +1,7 @@
-package com.example.presentation.favorite
+package com.example.presentation.screen.favorite
 
 import com.example.domain.repository.PostRepository
-import com.example.presentation.shared.BaseViewModel
+import com.example.presentation.shared.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.annotation.KoinViewModel
@@ -10,7 +10,8 @@ import org.koin.android.annotation.KoinViewModel
 class FavoriteViewModel(
     private val postRepository: PostRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : BaseViewModel<FavoriteUiState, FavoriteUiEffect>(FavoriteUiState()), FavoriteInteractionListener {
+) : BaseViewModel<FavoriteUiState, FavoriteUiEffect>(FavoriteUiState()),
+    FavoriteInteractionListener {
 
     init {
         getAllFavoritePosts()

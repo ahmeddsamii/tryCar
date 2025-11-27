@@ -1,6 +1,7 @@
 package com.example.presentation.favorite
 
 import com.example.domain.repository.PostRepository
+import com.example.presentation.screen.favorite.FavoriteViewModel
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.mockk
