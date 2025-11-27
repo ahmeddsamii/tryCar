@@ -1,4 +1,4 @@
-package com.example.presentation.shared
+package com.example.presentation.shared.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
