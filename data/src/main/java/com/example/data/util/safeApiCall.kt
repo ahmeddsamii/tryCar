@@ -35,29 +35,18 @@ suspend inline fun <reified T> handleResponseStatusCode(result: HttpResponse): T
 
         in 400..499 -> {
             when (result.status) {
-                HttpStatusCode.Unauthorized -> {
-                    logError(
-                        HANDLE_ERROR_STATUS_TAG,
-                        "Unauthorized",
-                        "Not authorized to do this action"
-                    )
-                    throw Exception()
-                }
-
                 HttpStatusCode.NotFound -> {
-                    logError(
+                    Log.e(
                         HANDLE_ERROR_STATUS_TAG,
-                        "Not found",
-                        "the resource you requested could not be found"
+                        "Not found with status code:${result.status.value}"
                     )
                     throw Exception()
                 }
 
                 else -> {
-                    logError(
-                        "HANDLE_ERROR_STATUS_TAG",
-                        "Unknown 400s status code ${result.status.value}",
-                        "An error with status code ${result.status.value} happened"
+                    Log.e(
+                        HANDLE_ERROR_STATUS_TAG,
+                        "Error with status code:${result.status.value}"
                     )
                     throw Exception()
                 }
@@ -65,31 +54,21 @@ suspend inline fun <reified T> handleResponseStatusCode(result: HttpResponse): T
         }
 
         in 500..599 -> {
-            logError(
+            Log.e(
                 HANDLE_ERROR_STATUS_TAG,
-                "Server error",
-                "An error occurred on the server side"
+                "Server error with status code:${result.status.value}"
             )
             throw Exception()
         }
 
         else -> {
-            logError(
+            Log.e(
                 HANDLE_ERROR_STATUS_TAG,
-                "Unknown status code ${result.status.value}",
-                "An error with status code ${result.status.value} happened"
+                "server error with status code:${result.status.value}"
             )
             throw Exception()
         }
     }
-}
-
-fun logError(
-    tag: String,
-    type: String,
-    message: String
-) {
-    Log.e(tag, "$type: $message" )
 }
 
 const val HANDLE_ERROR_STATUS_TAG = "handleErrorStatus"
