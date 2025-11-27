@@ -1,12 +1,12 @@
-package com.example.try_car
+package com.example.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.try_car.navigation.MainGraph
-import com.example.try_car.ui.theme.TrycarTheme
+import com.example.presentation.navigation.MainGraph
+import com.example.presentation.shared.theme.TrycarTheme
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
