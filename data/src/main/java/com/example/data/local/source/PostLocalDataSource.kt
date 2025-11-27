@@ -12,4 +12,7 @@ interface PostLocalDataSource {
     fun getAllFavoritePosts(): List<FavoritePost>
     fun insertFavoritePost(post: FavoritePost)
     fun deleteFavoritePostById(postId: Int)
+    fun getFavoritePostById(postId: Int)
+    fun getPendingFavoritePosts(): List<FavoritePost>
+    fun markFavoriteAsSynced(postId: Int)
 }

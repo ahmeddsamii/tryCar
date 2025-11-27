@@ -196,4 +196,57 @@ class PostRepositoryImplTest {
         // Then
         coVerify(exactly = 1) { localDataSource.deleteFavoritePostById(5) }
     }
+
+    @Test
+    fun `getFavoritePostById calls local data source with correct id`() = runTest {
+        // Given
+        coEvery { localDataSource.getFavoritePostById(any()) } returns Unit
+
+        // When
+        repository.getFavoritePostById(42)
+
+        // Then
+        coVerify(exactly = 1) { localDataSource.getFavoritePostById(42) }
+    }
+
+    @Test
+    fun `getPendingFavoritePosts returns mapped pending favorites`() = runTest {
+        // Given
+        val pending = listOf(
+            FavoritePost(userId = 2, id = 200, title = "Pending", body = "Pending Body")
+        )
+        coEvery { localDataSource.getPendingFavoritePosts() } returns pending
+
+        // When
+        val result = repository.getPendingFavoritePosts()
+
+        // Then
+        assertThat(result).hasSize(1)
+        assertThat(result[0].id).isEqualTo(200)
+    }
+
+    @Test
+    fun `getPendingFavoritePosts calls local data source`() = runTest {
+        // Given
+        coEvery { localDataSource.getPendingFavoritePosts() } returns emptyList()
+
+        // When
+        repository.getPendingFavoritePosts()
+
+        // Then
+        coVerify(exactly = 1) { localDataSource.getPendingFavoritePosts() }
+    }
+
+    @Test
+    fun `markFavoriteAsSynced calls local method with correct id`() = runTest {
+        // Given
+        coEvery { localDataSource.markFavoriteAsSynced(any()) } returns Unit
+
+        // When
+        repository.markFavoriteAsSynced(99)
+
+        // Then
+        coVerify(exactly = 1) { localDataSource.markFavoriteAsSynced(99) }
+    }
+
 }

@@ -33,6 +33,15 @@ interface PostDao {
     @Query("SELECT * FROM favorite_posts")
     fun getAllFavoritePosts(): List<FavoritePost>
 
+    @Query("SELECT * FROM favorite_posts WHERE id = :postId")
+    fun getFavoritePostById(postId: Int): FavoritePost?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavoritePost(post: FavoritePost)
+
+    @Query("SELECT * FROM favorite_posts WHERE isSynced = 0")
+    fun getPendingFavoritePosts(): List<FavoritePost>
+
+    @Query("UPDATE favorite_posts SET isSynced = 1 WHERE id = :postId")
+    fun markFavoriteAsSynced(postId: Int)
 }

@@ -35,6 +35,14 @@ class PostRepositoryImpl(
         }
     }
 
+    private fun clearAllPosts() {
+        localDataSource.clearAllPosts()
+    }
+
+    private fun insertAllPosts(posts: List<Post>) {
+        localDataSource.insertAllPosts(posts.toLocal())
+    }
+
     override suspend fun getAllCommentsByPostId(postId: Int): List<Comment> {
         return remoteDataSource.getAllCommentsByPostId(postId).toEntityList()
     }
@@ -51,8 +59,15 @@ class PostRepositoryImpl(
         localDataSource.deleteFavoritePostById(postId)
     }
 
-    private fun clearAllPosts() = localDataSource.clearAllPosts()
+    override suspend fun getFavoritePostById(postId: Int) {
+        localDataSource.getFavoritePostById(postId)
+    }
 
-    private fun insertAllPosts(posts: List<Post>) = localDataSource.insertAllPosts(posts.toLocal())
+    override suspend fun getPendingFavoritePosts(): List<Post> {
+        return localDataSource.getPendingFavoritePosts().favoritesToEntityList()
+    }
 
+    override suspend fun markFavoriteAsSynced(postId: Int) {
+        localDataSource.markFavoriteAsSynced(postId)
+    }
 }

@@ -38,6 +38,18 @@ class PostLocalDataSourceImpl(
         postDao.deleteFavoritePostById(postId)
     }
 
+    override fun getFavoritePostById(postId: Int) {
+        postDao.getPostById(postId)
+    }
+
+    override fun getPendingFavoritePosts(): List<FavoritePost> {
+        return postDao.getPendingFavoritePosts()
+    }
+
+    override fun markFavoriteAsSynced(postId: Int) {
+        postDao.markFavoriteAsSynced(postId)
+    }
+
     override fun getAllPosts(): List<LocalPost> {
         return postDao.getAllPosts()
     }

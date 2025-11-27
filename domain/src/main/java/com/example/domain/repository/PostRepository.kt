@@ -9,4 +9,7 @@ interface PostRepository {
     suspend fun getAllFavoritePosts(): List<Post>
     suspend fun insertFavoritePost(post: Post)
     suspend fun deletePostById(postId: Int)
+    suspend fun getFavoritePostById(postId: Int)
+    suspend fun getPendingFavoritePosts(): List<Post>
+    suspend fun markFavoriteAsSynced(postId: Int)
 }
