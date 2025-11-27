@@ -32,7 +32,7 @@ fun DetailsScreen(viewModel: DetailsViewModel = koinViewModel()) {
 @Composable
 fun DetailsScreenContent(
     state: DetailsUiState,
-    listener: CommentInteractionListener
+    listener: DetailsInteractionListener
 ) {
 
     if (state.error == ErrorState.NoInternet && state.comments.isEmpty()) {

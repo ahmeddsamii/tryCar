@@ -14,7 +14,7 @@ class DetailsViewModel(
     savedStateHandle: SavedStateHandle,
     private val postRepository: PostRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) : BaseViewModel<DetailsUiState, DetailsUiEffect>(DetailsUiState()), CommentInteractionListener {
+) : BaseViewModel<DetailsUiState, DetailsUiEffect>(DetailsUiState()), DetailsInteractionListener {
 
     private val postId = savedStateHandle.toRoute<Route.Details>().postId
 
