@@ -1,4 +1,4 @@
-package com.example.try_car.ui.theme
+package com.example.presentation.shared.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -59,7 +59,6 @@ fun TrycarTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
         content = content
     )
 }
