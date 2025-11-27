@@ -4,7 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.example.domain.entity.Comment
 import com.example.domain.repository.PostRepository
-import com.example.presentation.Route
+import com.example.presentation.navigation.Route
+import com.example.presentation.screen.details.DetailsViewModel
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.every

@@ -1,4 +1,4 @@
-package com.example.presentation.details
+package com.example.presentation.screen.details
 
 sealed interface DetailsUiEffect {
     data object NavigateBack : DetailsUiEffect

@@ -1,10 +1,10 @@
-package com.example.presentation.details
+package com.example.presentation.screen.details
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.toRoute
 import com.example.domain.repository.PostRepository
-import com.example.presentation.Route
-import com.example.presentation.shared.BaseViewModel
+import com.example.presentation.navigation.Route
+import com.example.presentation.shared.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.annotation.KoinViewModel

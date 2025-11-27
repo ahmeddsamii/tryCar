@@ -1,7 +1,7 @@
-package com.example.presentation.details
+package com.example.presentation.screen.details
 
 import com.example.domain.entity.Comment
-import com.example.presentation.shared.ErrorState
+import com.example.presentation.shared.base.ErrorState
 
 data class DetailsUiState(
     val isLoading: Boolean = false,
