@@ -1,4 +1,4 @@
-package com.example.presentation.home
+package com.example.presentation.screen.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,19 +24,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.example.presentation.R
-import com.example.presentation.Route
-import com.example.presentation.shared.ErrorState
-import com.example.presentation.shared.NoConnection
+import com.example.presentation.navigation.LocalNavController
+import com.example.presentation.navigation.Route
+import com.example.presentation.shared.base.ErrorState
+import com.example.presentation.shared.component.NoConnection
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController,
     viewModel: HomeViewModel = koinViewModel()
 ) {
 
+    val navController = LocalNavController.current
     val state by viewModel.state.collectAsStateWithLifecycle()
     HomeScreenContent(state, viewModel)
 

@@ -4,6 +4,8 @@ import app.cash.turbine.test
 import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
 import com.example.domain.util.ConnectivityObserver
+import com.example.presentation.screen.home.HomeUiEffect
+import com.example.presentation.screen.home.HomeViewModel
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
 import io.mockk.coVerify

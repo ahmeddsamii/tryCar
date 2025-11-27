@@ -1,10 +1,10 @@
-package com.example.presentation.home
+package com.example.presentation.screen.home
 
 import android.util.Log
 import com.example.domain.entity.Post
 import com.example.domain.repository.PostRepository
 import com.example.domain.util.ConnectivityObserver
-import com.example.presentation.shared.BaseViewModel
+import com.example.presentation.shared.base.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
