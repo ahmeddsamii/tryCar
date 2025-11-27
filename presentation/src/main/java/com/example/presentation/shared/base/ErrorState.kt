@@ -1,4 +1,4 @@
-package com.example.presentation.shared
+package com.example.presentation.shared.base
 
 sealed class ErrorState {
     data object NoInternet : ErrorState()
