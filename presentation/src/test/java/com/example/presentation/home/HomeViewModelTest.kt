@@ -45,29 +45,25 @@ class HomeViewModelTest {
 
     @Test
     fun `init handles error correctly`() = runTest {
-        // Given
+
         val exception = RuntimeException("Network error")
         coEvery { repository.getAllPosts() } throws exception
 
-        // When
         advanceUntilIdle()
 
-        // Then
         val state = viewModel.state.value
         assertThat(state.error).isNotNull()
     }
 
     @Test
     fun `onClickRetry calls getAllPosts again and updates state`() = runTest {
-        // Given
+
         val fakePosts = listOf(Post(1, 1, "X", "Y"))
         coEvery { repository.getAllPosts() } returns fakePosts
 
-        // When
         viewModel.onClickRetry()
         advanceUntilIdle()
 
-        // Then
         val state = viewModel.state.value
         assertThat(state.error).isNull()
         assertThat(state.isLoading).isFalse()
@@ -76,13 +72,11 @@ class HomeViewModelTest {
 
     @Test
     fun `onClickPost emits navigation effect with correct id`() = runTest {
-        // Given
+
         coEvery { repository.getAllPosts() } returns emptyList()
 
-        // When
         advanceUntilIdle()
 
-        // Then
         viewModel.effect.test {
             viewModel.onClickPost(42)
             val effect = awaitItem()
@@ -93,43 +87,62 @@ class HomeViewModelTest {
 
     @Test
     fun `onClickFavorite calls insertFavoritePost`() = runTest {
-        // Given
+
         val fakePost = Post(1, 10, "Title", "Body")
         coEvery { connectivityObserver.isConnected } returns flowOf(true)
 
-        // When
+
         viewModel.onClickFavorite(fakePost)
         advanceUntilIdle()
 
-        // Then
         coVerify(exactly = 1) { repository.insertFavoritePost(fakePost) }
     }
 
     @Test
     fun `onClickFavorite when connected triggers insertFavoritePost`() = runTest {
-        // Given
+
         val post = Post(1, 123, "T", "B")
         coEvery { connectivityObserver.isConnected } returns flowOf(true)
 
-        // When
         viewModel.onClickFavorite(post)
         advanceUntilIdle()
 
-        // Then
         coVerify { repository.insertFavoritePost(post) }
     }
 
     @Test
     fun `onClickFavorite when NOT connected still inserts favorite`() = runTest {
-        // Given
+
         val post = Post(1, 123, "T", "B")
         coEvery { connectivityObserver.isConnected } returns flowOf(false)
 
-        // When
         viewModel.onClickFavorite(post)
         advanceUntilIdle()
 
-        // Then
         coVerify { repository.insertFavoritePost(post) }
+    }
+
+    @Test
+    fun `init does not sync pending favorites when offline`() = runTest {
+
+        val pendingPosts = listOf(Post(1, 1, "Title", "Body"))
+        coEvery { connectivityObserver.isConnected } returns flowOf(false)
+
+        viewModel.onClickFavorite(pendingPosts.first())
+
+        coVerify(exactly = 0) { repository.markFavoriteAsSynced(any()) }
+    }
+
+    @Test
+    fun `onClickFavorite when offline does not mark as synced`() = runTest {
+
+        val post = Post(1, 123, "T", "B")
+        coEvery { connectivityObserver.isConnected } returns flowOf(false)
+
+        viewModel.onClickFavorite(post)
+        advanceUntilIdle()
+
+        coVerify { repository.insertFavoritePost(post) }
+        coVerify(exactly = 0) { repository.markFavoriteAsSynced(any()) }
     }
 }

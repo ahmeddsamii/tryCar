@@ -13,7 +13,7 @@ import org.koin.android.annotation.KoinViewModel
 @KoinViewModel
 class HomeViewModel(
     private val postRepository: PostRepository,
-    connectivityObserver: ConnectivityObserver,
+    private val connectivityObserver: ConnectivityObserver,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()), HomeInteractionListener {
 
@@ -21,6 +21,20 @@ class HomeViewModel(
 
     init {
         getAllPosts()
+        syncPendingFavorites()
+    }
+
+    private fun syncPendingFavorites() {
+        tryToExecute(
+            block = {
+                if (isConnected.first()) {
+                    postRepository.getPendingFavoritePosts().forEach { pendingPost ->
+                        addFavoriteToServer(pendingPost.id)
+                        postRepository.markFavoriteAsSynced(pendingPost.id)
+                    }
+                }
+            },
+        )
     }
 
     private fun getAllPosts() {
@@ -47,12 +61,17 @@ class HomeViewModel(
         tryToExecute(
             block = {
                 postRepository.insertFavoritePost(post)
-                if (isConnected.first()) addFavoriteToServer()
-            }
+
+                if (isConnected.first()) {
+                    addFavoriteToServer(post.id)
+                    postRepository.markFavoriteAsSynced(post.id)
+                }
+            },
+            dispatcher = dispatcher
         )
     }
 
-    private fun addFavoriteToServer() {
-        Log.d("TAG", "addFavoriteToServer...")
+    private fun addFavoriteToServer(postId: Int) {
+        Log.d("TAG", "🚀 addFavoriteToServer with id: $postId...")
     }
 }
