@@ -1,5 +1,6 @@
 package com.example.data.repository
 
+import android.util.Log
 import com.example.data.local.source.PostLocalDataSource
 import com.example.data.remote.mapper.favoritesToEntityList
 import com.example.data.remote.mapper.toEntityList
@@ -18,17 +19,19 @@ class PostRepositoryImpl(
     private val localDataSource: PostLocalDataSource
 ) : PostRepository {
     override suspend fun getAllPosts(): List<Post> {
-
-        return runCatching {
+        return try {
             val remotePosts = remoteDataSource.getAllPosts().toEntityList()
 
-            clearAllPosts()
-            insertAllPosts(remotePosts)
+            runCatching {
+                clearAllPosts()
+                insertAllPosts(remotePosts)
+            }.onFailure {
+                Log.d("TAG", "getAllPosts: ${it.message}")
+            }
 
             remotePosts
-        }.getOrElse {
-            val localPosts = localDataSource.getAllPosts().toEntityPostsFromLocal()
-            localPosts.ifEmpty { throw it }
+        } catch (exception: Exception) {
+            localDataSource.getAllPosts().toEntityPostsFromLocal().ifEmpty { throw exception }
         }
     }
 
