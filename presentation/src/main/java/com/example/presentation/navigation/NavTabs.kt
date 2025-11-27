@@ -1,14 +1,12 @@
-package com.example.try_car.navigation
+package com.example.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
-import com.example.presentation.Route
-import com.example.try_car.R
-import com.example.try_car.ui.component.NavigationTab
-import com.example.try_car.ui.component.TabIcons
+import com.example.presentation.R
+
 
 @Composable
-fun navTabs(): List<NavigationTab<Any>> {
+fun navTabs(): List<NavigationTab<Route>> {
     return listOf(
         NavigationTab(
             tabIcons = TabIcons(

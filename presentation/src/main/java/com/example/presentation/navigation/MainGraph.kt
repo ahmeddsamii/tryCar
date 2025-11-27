@@ -1,4 +1,4 @@
-package com.example.try_car.navigation
+package com.example.presentation.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -16,11 +16,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.presentation.Route
-import com.example.presentation.details.DetailsScreen
-import com.example.presentation.favorite.FavoriteScreen
-import com.example.presentation.home.HomeScreen
-import com.example.try_car.ui.component.NavBar
+import com.example.presentation.screen.details.DetailsScreen
+import com.example.presentation.screen.favorite.FavoriteScreen
+import com.example.presentation.screen.home.HomeScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -50,7 +48,7 @@ fun MainGraph() {
                     startDestination = Route.Home,
                 ) {
                     composable<Route.Home> {
-                        HomeScreen(navController)
+                        HomeScreen()
                     }
 
                     composable<Route.Favorite> {

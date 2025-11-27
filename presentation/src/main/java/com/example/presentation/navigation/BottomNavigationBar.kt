@@ -1,4 +1,4 @@
-package com.example.try_car.ui.component
+package com.example.presentation.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hasRoute
-import com.example.try_car.navigation.LocalNavController
 
 data class NavigationTab<out T>(
     val tabIcons: TabIcons,
