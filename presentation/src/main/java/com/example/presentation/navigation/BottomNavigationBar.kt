@@ -56,13 +56,13 @@ private object NavBarDimens {
 @Composable
 fun NavBar(
     modifier: Modifier = Modifier,
-    navDestinations: List<NavigationTab<Any>>,
+    navDestinations: List<NavigationTab<Route>>,
     navBackStackEntry: NavBackStackEntry? = null,
     navBarColors: NavBarColors = NavBarDefaults.navBarColors()
 ) {
     val navController = LocalNavController.current
 
-    val checkIfSelected: (Any) -> Boolean = { destination ->
+    val checkIfSelected: (Route) -> Boolean = { destination ->
         navBackStackEntry?.destination?.hasRoute(destination::class) == true
     }
 
