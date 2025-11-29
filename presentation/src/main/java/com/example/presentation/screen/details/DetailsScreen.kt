@@ -30,7 +30,7 @@ fun DetailsScreen(viewModel: DetailsViewModel = koinViewModel()) {
 }
 
 @Composable
-fun DetailsScreenContent(
+private fun DetailsScreenContent(
     state: DetailsUiState,
     listener: DetailsInteractionListener
 ) {

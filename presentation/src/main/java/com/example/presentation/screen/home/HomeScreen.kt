@@ -51,7 +51,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeScreenContent(
+private fun HomeScreenContent(
     state: HomeUiState,
     listener: HomeInteractionListener
 ) {

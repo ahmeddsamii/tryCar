@@ -12,8 +12,8 @@ import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
 class HomeViewModel(
+    connectivityObserver: ConnectivityObserver,
     private val postRepository: PostRepository,
-    private val connectivityObserver: ConnectivityObserver,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseViewModel<HomeUiState, HomeUiEffect>(HomeUiState()), HomeInteractionListener {
 

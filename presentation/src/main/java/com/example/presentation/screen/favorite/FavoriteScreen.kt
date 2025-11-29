@@ -38,7 +38,7 @@ fun FavoriteScreen(
 }
 
 @Composable
-fun FavoriteScreenContent(
+private fun FavoriteScreenContent(
     state: FavoriteUiState,
     listener: FavoriteInteractionListener
 ) {
