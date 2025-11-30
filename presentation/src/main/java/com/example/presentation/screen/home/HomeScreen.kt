@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -57,33 +59,50 @@ private fun HomeScreenContent(
     listener: HomeInteractionListener
 ) {
 
-    if (state.error == ErrorState.NoInternet && state.posts.isEmpty()) {
-        NoConnection(onClickRetry = { listener.onClickRetry() })
-    } else
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
+    when {
+        state.error == ErrorState.NoInternet && state.posts.isEmpty() -> NoConnection(
+            onClickRetry = { listener.onClickRetry() }
+        )
 
-            item {
-                TopAppBar(
-                    title = "Posts",
-                    painter = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White),
-                )
-            }
-
-            items(state.posts) { post ->
-                PostItem(
-                    title = post.title,
-                    body = post.body,
-                    onClickSave = { listener.onClickFavorite(post) },
-                    onClick = { listener.onClickPost(post.id) })
-            }
+        state.isLoading -> {
+            CircularProgressIndicator(
+                modifier = Modifier.requiredSize(32.dp)
+            )
         }
+
+        else -> PostsList(state = state, listener = listener)
+    }
+}
+
+@Composable
+private fun PostsList(
+    state: HomeUiState,
+    listener: HomeInteractionListener
+) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+
+        item {
+            TopAppBar(
+                title = "Posts",
+                painter = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White),
+            )
+        }
+
+        items(state.posts) { post ->
+            PostItem(
+                title = post.title,
+                body = post.body,
+                onClickSave = { listener.onClickFavorite(post) },
+                onClick = { listener.onClickPost(post.id) })
+        }
+    }
 }
 
 @Composable
