@@ -1,5 +1,6 @@
 package com.example.presentation.screen.favorite
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.presentation.R
 import com.example.presentation.shared.base.ErrorState
 import com.example.presentation.shared.component.NoConnection
+import com.example.presentation.shared.component.TopAppBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -37,6 +39,7 @@ fun FavoriteScreen(
     FavoriteScreenContent(state, viewModel)
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun FavoriteScreenContent(
     state: FavoriteUiState,
@@ -51,6 +54,17 @@ private fun FavoriteScreenContent(
             contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
+            item {
+                TopAppBar(
+                    title = "Favorite Posts",
+                    painter = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White),
+                )
+            }
+
             items(state.posts) { post ->
                 PostItem(
                     title = post.title,

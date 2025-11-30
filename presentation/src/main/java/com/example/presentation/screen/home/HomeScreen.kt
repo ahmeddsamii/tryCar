@@ -29,6 +29,7 @@ import com.example.presentation.navigation.LocalNavController
 import com.example.presentation.navigation.Route
 import com.example.presentation.shared.base.ErrorState
 import com.example.presentation.shared.component.NoConnection
+import com.example.presentation.shared.component.TopAppBar
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -64,6 +65,17 @@ private fun HomeScreenContent(
             contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+
+            item {
+                TopAppBar(
+                    title = "Posts",
+                    painter = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.White),
+                )
+            }
+
             items(state.posts) { post ->
                 PostItem(
                     title = post.title,

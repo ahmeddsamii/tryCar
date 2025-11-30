@@ -37,4 +37,6 @@ class DetailsViewModel(
         updateState { copy(error = null) }
         getAllCommentsByPostId()
     }
+
+    override fun onClickBack() { sendEffect(DetailsUiEffect.NavigateBack) }
 }
