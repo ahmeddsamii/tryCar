@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,11 +48,18 @@ fun NoConnection(onClickRetry: () -> Unit) {
             text = "Check your connection and try again",
             fontSize = 18.sp,
             color = Color.LightGray,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
 
         Button(
             onClick = onClickRetry,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonColors(
+                containerColor = Color.Black,
+                contentColor = Color.White,
+                disabledContainerColor = Color.LightGray,
+                disabledContentColor = Color.LightGray
+            )
         ) {
             Text("Retry")
         }
