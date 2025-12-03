@@ -1,5 +1,6 @@
 package com.example.presentation.screen.favorite
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,9 +23,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.presentation.R
@@ -49,6 +54,10 @@ private fun FavoriteScreenContent(
             CircularProgressIndicator(
                 modifier = Modifier.requiredSize(32.dp)
             )
+        }
+
+        state.posts.isEmpty() -> {
+            EmptyTrends()
         }
 
         else -> FavoritePostsList(state = state, listener = listener)
@@ -123,5 +132,29 @@ private fun PostItem(
             )
         }
         Text(text = body)
+    }
+}
+
+@Composable
+private fun EmptyTrends(modifier: Modifier = Modifier) {
+
+    Column(
+        modifier = modifier.wrapContentHeight(Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+
+        Image(
+            painter = painterResource(R.drawable.ic_empty_state),
+            contentDescription = "No Favorite yet!",
+            modifier = Modifier
+                .size(128.dp)
+                .padding(bottom = 12.dp)
+        )
+
+        Text(
+            text = "No Favorite yet!",
+            textAlign = TextAlign.Center,
+            color = Color.Black,
+        )
     }
 }
