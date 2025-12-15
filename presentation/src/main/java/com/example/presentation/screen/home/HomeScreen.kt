@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -80,6 +81,7 @@ private fun PostsList(
     listener: HomeInteractionListener
 ) {
     LazyColumn(
+        state = rememberLazyListState(),
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(vertical = 16.dp, horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
